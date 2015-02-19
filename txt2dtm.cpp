@@ -5,35 +5,7 @@
 #include <vector>
 #include <algorithm>
 #include "Movie.h"
-
-const char appName[] = "txt2dtm";
-
-int showHelp()
-{
-	std::cout << "Usage: " << appName << " inputFileName outputFileName" << std::endl;
-	return 0;
-}
-
-int error(char const * errString)
-{
-	std::cerr << "ERROR: " << errString << std::endl;
-	showHelp();
-	return 1;
-}
-
-Movie::DTMHeader getDTMHeader(std::ifstream &inputFile)
-{
-	Movie::DTMHeader header = {};
-	inputFile.read(reinterpret_cast<char*>(&header), sizeof(header));
-	return header;
-}
-
-Movie::ControllerState getControllerState(std::ifstream &inputFile)
-{
-	Movie::ControllerState controller = {};
-	inputFile.read(reinterpret_cast<char*>(&controller), sizeof(controller));
-	return controller;
-}
+#include "common.h"
 
 int main(int argc, char const * argv[])
 {
@@ -58,7 +30,7 @@ int main(int argc, char const * argv[])
 
 	std::string s;
 	std::vector<Movie::ControllerState> inputs;
-	while (getline(inFile, s))
+	while (getCommentLine(inFile, s))
 	{
 		if (s.empty()) continue;
 		size_t splitPos = s.find_first_of(':');

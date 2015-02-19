@@ -3,21 +3,7 @@
 #include <map>
 #include <string>
 #include "Movie.h"
-
-const char appName[] = "dtm2txt";
-
-int showHelp()
-{
-	std::cout << "Usage: " << appName << " inputFileName outputFileName" << std::endl;
-	return 0;
-}
-
-int error(char const * errString)
-{
-	std::cerr << "ERROR: " << errString << std::endl;
-	showHelp();
-	return 1;
-}
+#include "common.h"
 
 Movie::DTMHeader getDTMHeader(std::ifstream &inputFile)
 {
