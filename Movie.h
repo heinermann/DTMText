@@ -115,7 +115,9 @@ struct ControllerState
 			}
 			else
 			{
-				values[s.substr(0, split)] = std::stoul(s.substr(split+1));
+				std::string buttonStr = s.substr(0, split);
+				unsigned buttonValue = std::stoul(s.substr(split+1));
+				values[buttonStr] = buttonValue;
 			}
 		}
 
@@ -139,12 +141,18 @@ struct ControllerState
 
 		AnalogStickX = AnalogStickY = CStickX = CStickY = 128;
 		{
-			auto it = values.find("AnalogStickX");
-			if (it != values.end()) AnalogStickX = it->second;
+			auto it = values.find("AnalogX");
+			if (it != values.end())
+			{
+				AnalogStickX = it->second;
+			}
 		}
 		{
-			auto it = values.find("AnalogStickY");
-			if (it != values.end()) AnalogStickY = it->second;
+			auto it = values.find("AnalogY");
+			if (it != values.end())
+			{
+				AnalogStickY = it->second;
+			}
 		}
 		{
 			auto it = values.find("CStickX");
@@ -154,6 +162,8 @@ struct ControllerState
 			auto it = values.find("CStickY");
 			if (it != values.end()) CStickY = it->second;
 		}
+
+		reserved = 0;
 	}
 };
 static_assert(sizeof(ControllerState) == 8, "ControllerState should be 8 bytes");
@@ -175,9 +185,8 @@ template <class T>
 inline std::string arrToHexStrImp(const T *arr, unsigned N)
 {
 	std::ostringstream ss;
-	ss << std::hex << std::setfill('0') << std::setw(2);
 	for (unsigned i = 0; i < N; ++i)
-		ss << static_cast<unsigned>(arr[i]);
+		ss << std::hex << std::setfill('0') << std::setw(2) << static_cast<unsigned>(arr[i]);
 	return ss.str();
 }
 #define arrToHexStr(T) arrToHexStrImp(T, std::extent<decltype(T)>::value)
@@ -187,22 +196,51 @@ inline void hexStrToArrImp(std::string const &s, T *arr, unsigned N)
 {
 	for (unsigned i = 0; i < s.size() && i/2 < N; i += 2)
 	{
-		std::istringstream ss(s.substr(i,2));
-		unsigned value;
-		ss >> std::hex >> value;
+		unsigned value = std::stoul(s.substr(i,2), 0, 16);
 		arr[i/2] = static_cast<T>(value);
 	}
 }
 #define hexStrToArr(S,A) hexStrToArrImp(S, A, std::extent<decltype(A)>::value)
 
-std::ostream &operator <<(std::ostream &os, u8 const &v)
+std::ostream &operator <<(std::ostream & os, u8 const & v)
 {
 	return os << static_cast<unsigned>(v);
 }
-std::istream &operator >>(std::istream &is, u8 const &v)
+std::istream &operator >>(std::istream & is, u8 & v)
 {
-	return is >> static_cast<unsigned>(v);
+	unsigned value;
+	is >> value;
+	v = static_cast<u8>(value);
+	return is;
 }
+
+template <class T>
+void getHeaderLine(std::istream &is, T & v)
+{
+	std::string s;
+	getline(is, s);
+	std::istringstream ss(s);
+	ss >> s >> std::boolalpha >> v;
+}
+
+template <>
+void getHeaderLine(std::istream &is, std::string & v)
+{
+	std::string s;
+	getline(is, s);
+	
+	size_t pos = s.find_first_of(':');
+	if (pos != std::string::npos)
+	{
+		if (s.size() > pos+1 && s[pos+1] == ' ') ++pos;
+		v = s.substr(pos+1);
+	}
+	else
+	{
+		v = s;
+	}
+}
+
 
 #pragma pack(push,1)
 struct DTMHeader
@@ -314,7 +352,7 @@ struct DTMHeader
 		std::strncpy(reinterpret_cast<char*>(filetype), "DTM\x1A", sizeof(filetype));
 
 		std::string s;
-#define readI(V) archive >> s >> V;
+#define readI(V) getHeaderLine(archive, V);
 		readI(gameID);
 		readI(bWii);
 		readI(numControllers);
