@@ -99,3 +99,5 @@ tickCount: 78343200003
 1582: A 
 ````
 
+# txt2dtm
+Converts text files to dtm files. Must be in the format specified above.
