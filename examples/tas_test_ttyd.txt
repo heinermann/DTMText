@@ -1,0 +1,90 @@
+gameID: G8ME01
+bWii: false
+numControllers: 1
+bFromSaveState: false
+frameCount: 8787
+inputCount: 9331
+lagCount: 24
+uniqueID: 0
+numRerecords: 101
+author: 
+videoBackend: OGL
+audioEmulator: 
+md5: a49903a0e88fc63a3b1e9a095e708c2d
+recordingStartTime: 1424367888
+bSaveConfig: true
+bSkipIdle: false
+bDualCore: false
+bProgressive: false
+bDSPHLE: false
+bFastDiscSpeed: false
+CPUCore: 1
+bEFBAccessEnable: true
+bEFBCopyEnable: true
+bCopyEFBToTexture: false
+bEFBCopyCacheEnable: true
+bEFBEmulateFormatChanges: false
+bUseXFB: false
+bUseRealXFB: true
+memcards: 0
+bClearSave: false
+bongos: 0
+bSyncGPU: false
+bNetPlay: false
+discChange: 
+revision: 68a71d7e54d5d5bd9d96f233d660b1d962c252ef
+DSPiromHash: 3650125681
+DSPcoefHash: 2954478331
+tickCount: 75581100006
+
+# No memory card
+
+309: Start 						# Health and safety warning
+990: Start 						# Intro cinematic
+1250: Start 					# Title screen
+1417: B 							# Messagebox scrolling
+1421: B 
+1433: B 
+1435: B 
+1455: AnalogY:255 		# No memory card, move up to yes
+1456: A 							# Confirm
+1534: A 							# Select file
+1664: A 							# Choose first character
+1665: Start 					# Accept name
+1666: AnalogY:255 		# Move up to yes
+1667: A 							# Confirm name
+2587: A 							# A/B combo for shorter textbox (saves 1 frame)
+2588: B 
+3527: B 
+3529: B 
+3697: A 
+3698: B 
+3748: A 
+3749: B 
+4002: B 
+4015: B 
+4028: B 
+4041: B 
+4054: B 
+4067: B 
+4080: B 
+4294: B 
+4296: B 
+4309: B 
+5596: Start 						# Title/intro with the boat
+6756: Start 						# Prologue introduction
+7085: A 
+7086: B 
+7237: A 
+7238: B 
+7246: B 
+7771: B 
+7773: B 
+8649: B 
+8651: B 
+8664: B 
+8675: B 
+8826: B 
+8829: B 
+8844: B 
+8858: B 
