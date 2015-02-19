@@ -101,3 +101,26 @@ tickCount: 78343200003
 
 # txt2dtm
 Converts text files to dtm files. Must be in the format specified above.
+
+## Comments
+In addition to the format above, the input area can also have comments, for example:
+
+````
+# Intro
+309: A 
+990: Start 
+1250: Start 
+1417: A 
+1471: A 
+1483: A 
+
+# Menus
+1548: AnalogY:0  # Delete the save file
+1550: AnalogY:0 
+1551: A 
+1553: A 
+1569: A 
+1581: AnalogY:255 
+1582: A 
+````
+
